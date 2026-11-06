@@ -1,9 +1,9 @@
-name: Publish plugin
-description: Zips the docs of a plugin and sends them to Steward with the OIDC token of the job.
+name: Publish provider
+description: Zips the docs of a provider and sends them to Steward with the OIDC token of the job.
 
 inputs:
-  plugin-id:
-    description: The id of the plugin in Steward
+  provider-id:
+    description: The id of the provider in Steward
     required: true
   docs:
     description: The folder with the markdown pages of the docs
@@ -25,4 +25,4 @@ runs:
     - shell: bash
       env:
         INPUTS: ${{ toJSON(inputs) }}
-      run: node "${{ github.action_path }}/dist/index.js" plugin publish
+      run: node "${{ github.action_path }}/dist/index.js" provider publish

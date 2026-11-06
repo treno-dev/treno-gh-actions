@@ -22,14 +22,14 @@ export const platforms = [
 // Unix permissions go in the high half of the attributes of a zip entry: rwxr-xr-x for the executable.
 const EXECUTABLE = 0o755 << 16
 
-/** Compiles the plugin in the current folder for one platform into the file. The plugin must not need cgo to be built. */
+/** Compiles the provider in the current folder for one platform into the file. The provider must not need cgo to be built. */
 async function compile({ os, arch }, file) {
   const env = { ...process.env, CGO_ENABLED: '0', GOOS: os, GOARCH: arch }
 
   await run('go', ['build', '-trimpath', '-ldflags', '-s -w', '-o', file, '.'], { env })
 }
 
-/** The bundle of a platform (ADR 003): the executable and `steward.json`, which says what the plugin is and how to start it. */
+/** The bundle of a platform (ADR 003): the executable and `steward.json`, which says what the provider is and how to start it. */
 async function bundle(platform, { name, version, entrypoint }) {
   const executable = platform.os === 'windows' ? `${entrypoint}.exe` : entrypoint
   const scratch = await mkdtemp(join(tmpdir(), 'steward-bundle-'))
@@ -53,7 +53,7 @@ async function bundle(platform, { name, version, entrypoint }) {
 }
 
 /**
- * Builds the bundle of each platform from the plugin in the current folder, and the file of their checksums. Returns the
+ * Builds the bundle of each platform from the provider in the current folder, and the file of their checksums. Returns the
  * assets of the release: each has a name, its content and its type. The bundles are named `<repository>_<os>_<arch>.zip`.
  */
 export async function buildBundles({ repository, name, version, entrypoint }) {

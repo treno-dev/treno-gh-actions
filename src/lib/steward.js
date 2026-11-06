@@ -45,16 +45,16 @@ export function retrying(what) {
   }
 }
 
-/** The calls that publish a plugin to Steward, with the OIDC token of the job. */
+/** The calls that publish a provider to Steward, with the OIDC token of the job. */
 export class Steward {
-  constructor(address, pluginId, token) {
-    this.plugin = `${address.replace(/\/+$/, '')}/plugins/${pluginId}`
+  constructor(address, providerId, token) {
+    this.provider = `${address.replace(/\/+$/, '')}/providers/${providerId}`
     this.client = new HttpClient(USER_AGENT, [new BearerCredentialHandler(token)])
   }
 
   /** Announces the zip of a version and is given the URL to upload it to. */
   async begin(announcement) {
-    return pRetry(() => this.#post(`${this.plugin}/uploads`, announcement), retrying('Announcing the zip'))
+    return pRetry(() => this.#post(`${this.provider}/uploads`, announcement), retrying('Announcing the zip'))
   }
 
   /** Uploads the zip to the URL that begin gave, which is not Steward and takes no token. */
@@ -77,12 +77,12 @@ export class Steward {
 
   /** Says the zip is uploaded, which has Steward process it. Returns the publication. */
   async finish(announcement) {
-    return pRetry(() => this.#post(`${this.plugin}/versions`, announcement), retrying('Finishing the publication'))
+    return pRetry(() => this.#post(`${this.provider}/versions`, announcement), retrying('Finishing the publication'))
   }
 
   /** The address where the outcome of the publication is read. */
   status(publication) {
-    return `${this.plugin}/publications/${publication.ulid}`
+    return `${this.provider}/publications/${publication.ulid}`
   }
 
   /** Posts the object as JSON. The client rejects an error response with the message of Steward. */

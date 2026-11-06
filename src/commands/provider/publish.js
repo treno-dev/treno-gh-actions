@@ -6,16 +6,16 @@ import { Steward } from '@/lib/steward.js'
 import { versionFromTag } from '@/lib/tag.js'
 
 async function publish() {
-  const { 'plugin-id': pluginId, docs, steward: address, audience } = inputs()
+  const { 'provider-id': providerId, docs, steward: address, audience } = inputs()
 
-  if (!pluginId) {
-    throw new Error('The plugin-id input is required')
+  if (!providerId) {
+    throw new Error('The provider-id input is required')
   }
 
   // Steward checks the tag against the token too.
   const { version } = versionFromTag()
 
-  core.info(`Publishing version ${version} of plugin ${pluginId} to ${address}`)
+  core.info(`Publishing version ${version} of provider ${providerId} to ${address}`)
 
   const zip = await zipDocs(docs)
 
@@ -23,7 +23,7 @@ async function publish() {
 
   core.info(`Asking GitHub for an OIDC token for ${audience}`)
 
-  const steward = new Steward(address, pluginId, await core.getIDToken(audience))
+  const steward = new Steward(address, providerId, await core.getIDToken(audience))
   const announcement = { version, size: zip.size }
 
   core.info('Announcing the zip to Steward')
@@ -55,10 +55,10 @@ async function publish() {
   await core.summary.addRaw(`Sent ${version} to Steward. [Status](${status})`).write()
 }
 
-/** Adds `publish` to `plugin`. It reads the inputs of the action. */
-export function addPublish(plugin) {
-  plugin
+/** Adds `publish` to `provider`. It reads the inputs of the action. */
+export function addPublish(provider) {
+  provider
     .command('publish')
-    .description('Zip the docs of a plugin and send them to Steward with the OIDC token of the job')
+    .description('Zip the docs of a provider and send them to Steward with the OIDC token of the job')
     .action(publish)
 }

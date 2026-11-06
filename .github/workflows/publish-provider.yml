@@ -1,12 +1,12 @@
-name: Publish plugin
+name: Publish provider
 
-# Publishes the docs of a plugin to Steward when a tag `v<version>` is pushed. The job proves where it runs
+# Publishes the docs of a provider to Steward when a tag `v<version>` is pushed. The job proves where it runs
 # with the OIDC token that GitHub issues for it, so it needs no secret. The calling job must allow `id-token: write`.
 on:
   workflow_call:
     inputs:
-      pluginId:
-        description: The id of the plugin in Steward
+      providerId:
+        description: The id of the provider in Steward
         type: string
         required: true
       docs:
@@ -28,8 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: treno-dev/steward-gh-actions/actions/publish-plugin@v1
+      - uses: treno-dev/steward-gh-actions/actions/publish-provider@v1
         with:
-          plugin-id: ${{ inputs.pluginId }}
+          provider-id: ${{ inputs.providerId }}
           docs: ${{ inputs.docs }}
           steward: ${{ inputs.steward }}

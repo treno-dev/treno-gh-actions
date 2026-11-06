@@ -5,7 +5,7 @@ import { inputs } from '@/lib/inputs.js'
 import { Releases } from '@/lib/releases.js'
 import { versionFromTag } from '@/lib/tag.js'
 
-const REPOSITORY_PREFIX = 'steward-plugin-'
+const REPOSITORY_PREFIX = 'treno-provider-'
 
 async function release() {
   const { entrypoint, token } = inputs()
@@ -46,10 +46,10 @@ async function release() {
   await core.summary.addRaw(`Released ${tag} with ${assets.map((asset) => `\`${asset.name}\``).join(', ')}.`).write()
 }
 
-/** Adds `release` to `plugin`. It reads the inputs of the action. */
-export function addRelease(plugin) {
-  plugin
+/** Adds `release` to `provider`. It reads the inputs of the action. */
+export function addRelease(provider) {
+  provider
     .command('release')
-    .description('Build the bundle of a Go plugin for each platform and attach them to the GitHub release of the tag')
+    .description('Build the bundle of a Go provider for each platform and attach them to the GitHub release of the tag')
     .action(release)
 }

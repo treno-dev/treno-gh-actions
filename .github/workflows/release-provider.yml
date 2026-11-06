@@ -1,6 +1,6 @@
-name: Release plugin
+name: Release provider
 
-# Builds the bundle of a Go plugin for each platform and attaches them to the GitHub release of the tag `v<version>`, with the
+# Builds the bundle of a Go provider for each platform and attaches them to the GitHub release of the tag `v<version>`, with the
 # checksums of the zips, and then publishes the release. A bundle is a zip with `steward.json` and the executable (ADR 003).
 # The runner of an integration fetches the zip of its own platform from the release. The calling job must allow
 # `contents: write`.
@@ -10,7 +10,7 @@ on:
       entrypoint:
         description: The name of the executable inside the bundle
         type: string
-        default: plugin
+        default: provider
 
 jobs:
   release:
@@ -21,6 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: treno-dev/steward-gh-actions/actions/release-plugin@v1
+      - uses: treno-dev/steward-gh-actions/actions/release-provider@v1
         with:
           entrypoint: ${{ inputs.entrypoint }}
