@@ -2,7 +2,7 @@ name: Release provider
 
 # Builds the bundle of a Go provider for each platform and attaches them to the GitHub release of the tag `v<version>`, with the
 # checksums of the zips, and then publishes the release. A bundle is a zip with `steward.json` and the executable (ADR 003).
-# The runner of an integration fetches the zip of its own platform from the release. The calling job must allow
+# The runner of a provider fetches the zip of its own platform from the release. The calling job must allow
 # `contents: write`.
 on:
   workflow_call:
