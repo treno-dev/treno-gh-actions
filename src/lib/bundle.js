@@ -29,10 +29,10 @@ async function compile({ os, arch }, file) {
   await run('go', ['build', '-trimpath', '-ldflags', '-s -w', '-o', file, '.'], { env })
 }
 
-/** The bundle of a platform (ADR 003): the executable and `steward.json`, which says what the provider is and how to start it. */
+/** The bundle of a platform (ADR 003): the executable and `treno.json`, which says what the provider is and how to start it. */
 async function bundle(platform, { name, version, entrypoint }) {
   const executable = platform.os === 'windows' ? `${entrypoint}.exe` : entrypoint
-  const scratch = await mkdtemp(join(tmpdir(), 'steward-bundle-'))
+  const scratch = await mkdtemp(join(tmpdir(), 'treno-bundle-'))
 
   try {
     const file = join(scratch, executable)
@@ -43,7 +43,7 @@ async function bundle(platform, { name, version, entrypoint }) {
 
     const zip = new AdmZip()
 
-    zip.addFile('steward.json', Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`))
+    zip.addFile('treno.json', Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`))
     zip.addFile(executable, await readFile(file), '', EXECUTABLE)
 
     return zip.toBuffer()

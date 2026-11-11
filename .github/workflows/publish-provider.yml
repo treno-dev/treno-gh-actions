@@ -1,22 +1,22 @@
 name: Publish provider
 
-# Publishes the docs of a provider to Steward when a tag `v<version>` is pushed. The job proves where it runs
+# Publishes the docs of a provider to Treno when a tag `v<version>` is pushed. The job proves where it runs
 # with the OIDC token that GitHub issues for it, so it needs no secret. The calling job must allow `id-token: write`.
 on:
   workflow_call:
     inputs:
       providerId:
-        description: The id of the provider in Steward
+        description: The id of the provider in Treno
         type: string
         required: true
       docs:
         description: The folder with the markdown pages of the docs
         type: string
         default: docs
-      steward:
-        description: The address of Steward
+      treno:
+        description: The address of Treno
         type: string
-        default: https://steward.treno.dev
+        default: https://treno.dev
 
 jobs:
   publish:
@@ -28,8 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: treno-dev/steward-gh-actions/actions/publish-provider@v1
+      - uses: treno-dev/treno-gh-actions/actions/publish-provider@v1
         with:
           provider-id: ${{ inputs.providerId }}
           docs: ${{ inputs.docs }}
-          steward: ${{ inputs.steward }}
+          treno: ${{ inputs.treno }}

@@ -5,7 +5,7 @@ import { HttpClient, HttpClientError } from '@actions/http-client'
 import { BearerCredentialHandler } from '@actions/http-client/lib/auth'
 import pRetry from 'p-retry'
 
-import { retrying } from '@/lib/steward.js'
+import { retrying } from '@/lib/treno.js'
 
 const API = 'https://api.github.com'
 const UPLOADS = 'https://uploads.github.com'
@@ -16,7 +16,7 @@ const HEADERS = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version':
 export class Releases {
   constructor(repository, token) {
     this.repository = repository
-    this.client = new HttpClient('steward-gh-actions', [new BearerCredentialHandler(token)])
+    this.client = new HttpClient('treno-gh-actions', [new BearerCredentialHandler(token)])
   }
 
   /**

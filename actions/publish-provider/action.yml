@@ -1,19 +1,19 @@
 name: Publish provider
-description: Zips the docs of a provider and sends them to Steward with the OIDC token of the job.
+description: Zips the docs of a provider and sends them to Treno with the OIDC token of the job.
 
 inputs:
   provider-id:
-    description: The id of the provider in Steward
+    description: The id of the provider in Treno
     required: true
   docs:
     description: The folder with the markdown pages of the docs
     default: docs
-  steward:
-    description: The address of Steward
-    default: https://steward.treno.dev
+  treno:
+    description: The address of Treno
+    default: https://treno.dev
   audience:
-    description: What the OIDC token is for, which Steward checks
-    default: https://steward.treno.dev
+    description: What the OIDC token is for, which Treno checks
+    default: https://treno.dev
 
 runs:
   using: composite

@@ -3,7 +3,7 @@ import { Command } from 'commander'
 
 import { addProvider } from '@/commands/provider/index.js'
 
-const program = new Command('steward-actions').description('The actions of Steward, which also run from a terminal')
+const program = new Command('treno-actions').description('The actions of Treno, which also run from a terminal')
 
 addProvider(program)
 
