@@ -29,7 +29,7 @@ async function compile({ os, arch }, file) {
   await run('go', ['build', '-trimpath', '-ldflags', '-s -w', '-o', file, '.'], { env })
 }
 
-/** The bundle of a platform (ADR 003): the executable and `treno.json`, which says what the provider is and how to start it. */
+/** The bundle of a platform (ADR 013): the executable and `treno.json`, which says what the provider is and how to start it. */
 async function bundle(platform, { name, version, entrypoint }) {
   const executable = platform.os === 'windows' ? `${entrypoint}.exe` : entrypoint
   const scratch = await mkdtemp(join(tmpdir(), 'treno-bundle-'))
